@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 
-function ContactForms(props) {
+function EditContacts(props) {
     const [dataForm, setDataForm] = useState({
-        name:"",
-        number:"",
-        location:""
+        id: props.contact.id,
+        name:props.contact.name,
+        number:props.contact.number,
+        location:props.contact.location
     })
 
     function handleChange(event){
@@ -22,12 +23,13 @@ function ContactForms(props) {
 
     function handleSubmit(event) {
         event.preventDefault()
-        props.newContact(dataForm)
+        props.editUser(dataForm.id, dataForm)
         setDataForm({
             name:"",
             number:"",
             location:""
         })
+        props.closeUser()
     }
 
   return (
@@ -35,19 +37,19 @@ function ContactForms(props) {
 
       <Form.Group className="mb-3" controlId="formGroupEmail">
         <Form.Label>Name</Form.Label>
-        <Form.Control type="text" placeholder="Name" required 
+        <Form.Control type="text" placeholder="Name" 
             name='name' value={dataForm.name} onChange={handleChange} />
       </Form.Group>
 
       <Form.Group controlId="formGridEmail">
           <Form.Label>Number</Form.Label>
-          <Form.Control type="number" placeholder="Enter number" required 
+          <Form.Control type="text" placeholder="Enter number" 
             name='number' value={dataForm.number} onChange={handleChange}/>
         </Form.Group>
 
       <Form.Group className="mb-3" controlId="formGridAddress1">
         <Form.Label>location</Form.Label>
-        <Form.Control placeholder="Location" required
+        <Form.Control placeholder="Location"
             name='location' value={dataForm.location} onChange={handleChange} />
       </Form.Group>
 
@@ -56,4 +58,4 @@ function ContactForms(props) {
   );
 }
 
-export default ContactForms;
+export default EditContacts;

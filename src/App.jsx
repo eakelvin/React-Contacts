@@ -8,14 +8,14 @@ function App() {
   const [contacts, setContacts] = useState([
     {
       id: 1,
-      name: "Visual",
-      location: "Studio",
+      name: "Default One",
+      location: "Vite JSX",
       number: "715-888-3521"
     },
     {
       id: 2,
-      name: "Visual",
-      location: "Studio",
+      name: "Default Two",
+      location: "Yarn JSX",
       number: "715-888-3521"
     }
 
@@ -25,6 +25,23 @@ function App() {
     setContacts([...contacts, contact])
   }
 
+  const deleteUser = (id) => {
+    setContacts([...contacts.filter((contact) => contact.id !== id)])
+  }
+
+  const editUser = (id, updatedContact) => {
+    setContacts(
+      contacts.map((contact) => {
+        if (contact.id === id){
+          return updatedContact
+        }
+        else {
+          return contact
+        }
+      })
+    )
+  }
+  
 
   return (
     <>
@@ -34,7 +51,11 @@ function App() {
             <ContactForms newContact={addContact} />
           </Col>
           <Col sm={8}>
-            <Contacts contacts={contacts} />
+            <Contacts
+              contacts={contacts} 
+              deleteUser={deleteUser}
+              editUser={editUser} 
+            />
           </Col>
         </Row>
       </Container>
