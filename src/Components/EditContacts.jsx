@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
+import { editUser } from './UserReducer';
+import { useDispatch } from 'react-redux';
 
 function EditContacts(props) {
+  const dispatch = useDispatch()
+
     const [dataForm, setDataForm] = useState({
-        id: props.contact.id,
+        id:props.contact.id,
         name:props.contact.name,
         number:props.contact.number,
         location:props.contact.location
@@ -23,12 +27,13 @@ function EditContacts(props) {
 
     function handleSubmit(event) {
         event.preventDefault()
-        props.editUser(dataForm.id, dataForm)
-        setDataForm({
-            name:"",
-            number:"",
-            location:""
-        })
+        const updatedForm = {
+          id: props.contact.id,
+          name: dataForm.name,
+          number: dataForm.number,
+          location: dataForm.location
+        }
+       dispatch(editUser({ id:props.contact.id, updatedUser:updatedForm }))
         props.closeUser()
     }
 
@@ -53,7 +58,7 @@ function EditContacts(props) {
             name='location' value={dataForm.location} onChange={handleChange} />
       </Form.Group>
 
-      <Button type="submit">Submit form</Button>
+      <Button type="submit">Save Changes</Button>
     </Form>
   );
 }

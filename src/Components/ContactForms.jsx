@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser } from './UserReducer';
 
-function ContactForms(props) {
+function ContactForms() {
+  const dispatch = useDispatch()
+
     const [dataForm, setDataForm] = useState({
         name:"",
         number:"",
@@ -22,7 +26,12 @@ function ContactForms(props) {
 
     function handleSubmit(event) {
         event.preventDefault()
-        props.newContact(dataForm)
+        const newUser = {
+          name: dataForm.name,
+          number: dataForm.number,
+          location: dataForm.location
+        }
+        dispatch(addUser(newUser))
         setDataForm({
             name:"",
             number:"",
